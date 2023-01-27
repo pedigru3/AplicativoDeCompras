@@ -15,8 +15,20 @@ import { z } from "zod";
 export const itemSchema = z.object({
   name: z.string(),
   id: z.string(),
-  qnt: z.number().transform((qnt) => qnt.toString()),
-  price: z.number().transform((qnt) => qnt.toFixed(2)),
+  qnt: z
+    .number()
+    .nullable()
+    .transform((qnt) => {
+      if (qnt) {
+        return qnt.toString();
+      } else {
+        return "0";
+      }
+    }),
+  price: z
+    .number()
+    .nullable()
+    .transform((qnt) => (qnt ? qnt.toFixed(2) : "0,00")),
   category: z.enum([
     Category.Alimentos,
     Category.Carnes,

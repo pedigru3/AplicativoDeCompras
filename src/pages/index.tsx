@@ -8,7 +8,6 @@ import { useContext, useEffect, useState } from "react";
 export default function Home() {
   const { state, setState, total, setTotal } = useContext(ItemContext);
   const [category, setCategory] = useState<Category>(Category.Alimentos);
-
   const [filteredItems, setFilteredItems] = useState<ItemType[]>([]);
 
   useEffect(() => {
@@ -17,6 +16,10 @@ export default function Home() {
       const newList: ItemType[] = JSON.parse(oldItems);
       setState(newList);
       setTotal(SumItems(newList));
+      const newFilter = newList.filter(
+        (item) => item.category === Category.Alimentos
+      );
+      setFilteredItems(newFilter);
     }
   }, []);
 
@@ -63,7 +66,7 @@ export default function Home() {
       <div>
         <Menu onClick={handleMenuClick} />
       </div>
-
+      <h1 className="text-[40px] font-bold text-center">{category}</h1>
       <div>
         <div className="flex [&>div]:text-center [&>div]:font-bold ">
           <div className="w-2/4 bg-orange-400 m-1">Item</div>
@@ -108,22 +111,7 @@ export default function Home() {
                 required
               />
             </div>
-            <label className="w-1/2 m-0.5 pr-4">Selecione a categoria:</label>
-            <select
-              className="w-1/2 m-0.5 appearance-none bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              id="grid-state"
-              required
-              onChange={(e) => {
-                setCategory(e.target.value as Category);
-              }}
-            >
-              <option>{Category.Alimentos}</option>
-              <option>{Category.HigienePessoal}</option>
-              <option>{Category.Limpeza}</option>
-              <option>{Category.Utilidades}</option>
-              <option>{Category.Feira}</option>
-              <option>{Category.Carnes}</option>
-            </select>
+
             <div className="w-full flex items-stretch">
               <button
                 type="button"
