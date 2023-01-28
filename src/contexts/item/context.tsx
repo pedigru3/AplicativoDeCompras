@@ -29,7 +29,7 @@ export const itemSchema = z.object({
   price: z
     .number()
     .nullable()
-    .transform((qnt) => (qnt ? qnt.toFixed(2) : "0,00"))
+    .transform((qnt) => (qnt ? qnt.toFixed(2) : "0"))
     .or(z.nan().transform((nan) => "0")),
   category: z.enum([
     Category.Alimentos,
