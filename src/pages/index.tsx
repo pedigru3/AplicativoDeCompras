@@ -75,6 +75,11 @@ export default function Home() {
     }
   }
 
+  function updateFilter(newList: ItemType[]) {
+    const newFilter = newList.filter((item) => item.category === category);
+    setFilteredItems(newFilter);
+  }
+
   return (
     <>
       <div>
@@ -93,7 +98,10 @@ export default function Home() {
               key={item.id}
               className="flex [&>div]:h-10 [&>div]:justify-center align-middle [&>div]:flex [&>div]:items-center"
             >
-              <Input itemProp={itemSchema.parse(item)}></Input>
+              <Input
+                itemProp={itemSchema.parse(item)}
+                onClickDelete={updateFilter}
+              ></Input>
             </li>
           ))}
         </ul>
@@ -136,15 +144,15 @@ export default function Home() {
               </button>
             </div>
           </form>
-          <div className="0 m-1 rounded-md h-10 flex justify-between items-center px-5">
-            <p className="font-bold">{`Total: R$ ${total}`}</p>
+          <div className="0 m-1 rounded-md h-10 flex justify-between items-center">
             <button
               type="button"
-              className=" bg-red-400 rounded-md box-border h-10 mx-1 px-4"
+              className=" bg-red-400 rounded-md box-border h-8 mx-1 px-4"
               onClick={handleDeleteButton}
             >
               APAGAR TUDO
             </button>
+            <p className="font-bold text-xl mr-1">{`Total: R$ ${total}`}</p>
           </div>
         </div>
       </div>
