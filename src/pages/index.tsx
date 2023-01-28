@@ -21,6 +21,7 @@ export default function Home() {
       );
       setFilteredItems(newFilter);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleMenuClick = (newValue: Category) => {
@@ -36,7 +37,7 @@ export default function Home() {
   const [price, setPrice] = useState("");
 
   function handleClickButton(e: React.FormEvent) {
-    if (name && qnt && price) {
+    if (name) {
       const newList = [
         ...state,
         {
@@ -47,7 +48,11 @@ export default function Home() {
           category: category,
         },
       ];
+      setFilteredItems(newList);
       setState(newList);
+
+      const newFilter = newList.filter((item) => item.category === category);
+      setFilteredItems(newFilter);
 
       const newItens = JSON.stringify(newList);
       localStorage.setItem("items_db", newItens);
@@ -59,6 +64,15 @@ export default function Home() {
     }
 
     e.preventDefault();
+  }
+
+  function handleDeleteButton() {
+    var response = confirm("Tem certeza que quer deletar tudo?");
+    if (response) {
+      setState([]);
+      setFilteredItems([]);
+      localStorage.clear();
+    }
   }
 
   return (
@@ -122,8 +136,15 @@ export default function Home() {
               </button>
             </div>
           </form>
-          <div className="0 m-1 rounded-md h-10 flex items-center px-5">
+          <div className="0 m-1 rounded-md h-10 flex justify-between items-center px-5">
             <p className="font-bold">{`Total: R$ ${total}`}</p>
+            <button
+              type="button"
+              className=" bg-red-400 rounded-md box-border h-10 mx-1 px-4"
+              onClick={handleDeleteButton}
+            >
+              APAGAR TUDO
+            </button>
           </div>
         </div>
       </div>

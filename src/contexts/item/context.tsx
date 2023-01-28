@@ -24,11 +24,13 @@ export const itemSchema = z.object({
       } else {
         return "0";
       }
-    }),
+    })
+    .or(z.nan().transform((nan) => "Valor inválido")),
   price: z
     .number()
     .nullable()
-    .transform((qnt) => (qnt ? qnt.toFixed(2) : "0,00")),
+    .transform((qnt) => (qnt ? qnt.toFixed(2) : "0,00"))
+    .or(z.nan().transform((nan) => "0")),
   category: z.enum([
     Category.Alimentos,
     Category.Carnes,
