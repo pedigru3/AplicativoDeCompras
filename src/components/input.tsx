@@ -21,18 +21,14 @@ export default function Input(props: {
 
   const [focus, setFocus] = useState(false);
 
-  function handleClick({
-    name = props.itemProp.name,
-    qnt = props.itemProp.qnt,
-    price = props.itemProp.price,
-  }) {
+  function handleClick({ newName = name, newQnt = qnt, newPrice = price }) {
     const oldList = state;
     const index = oldList.findIndex((item) => item.id === props.itemProp.id);
     oldList[index] = {
       id: props.itemProp.id,
-      name: name,
-      qnt: parseFloat(qnt),
-      price: parseFloat(price),
+      name: newName,
+      qnt: parseFloat(newQnt),
+      price: parseFloat(newPrice),
       category: category,
     };
     setState(oldList);
@@ -82,7 +78,7 @@ export default function Input(props: {
           value={name}
           onChange={(e) => {
             setName(e.target.value);
-            handleClick({ name: e.target.value });
+            handleClick({ newName: e.target.value });
           }}
           onSuspendCapture={() => console.log("teste")}
           onFocus={handleOnFocus}
@@ -95,7 +91,7 @@ export default function Input(props: {
           value={qnt}
           onChange={(e) => {
             setQnt(e.target.value);
-            handleClick({ qnt: e.target.value });
+            handleClick({ newQnt: e.target.value });
           }}
           onFocus={handleOnFocus}
           onBlur={handleOnBlur}
@@ -111,8 +107,8 @@ export default function Input(props: {
             clearTimeout(timeoutId);
             const newTimeoutId = setTimeout(() => {
               setPrice(parseFloat(e.target.value).toFixed(2));
-              handleClick({ price: e.target.value });
-            }, 3000);
+              handleClick({ newPrice: e.target.value });
+            }, 1500);
             setTimeoutId(newTimeoutId);
           }}
           onFocus={handleOnFocus}

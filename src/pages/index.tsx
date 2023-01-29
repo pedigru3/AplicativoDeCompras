@@ -43,8 +43,8 @@ export default function Home() {
         {
           id: Date.now().toString(),
           name: name,
-          qnt: qnt ? parseFloat(qnt) : 0,
-          price: price ? parseFloat(price) : 0,
+          qnt: parseFloat(qnt),
+          price: parseFloat(price),
           category: category,
         },
       ];

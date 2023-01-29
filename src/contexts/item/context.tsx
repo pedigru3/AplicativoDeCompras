@@ -22,15 +22,15 @@ export const itemSchema = z.object({
       if (qnt) {
         return qnt.toString();
       } else {
-        return "0";
+        return "";
       }
     })
     .or(z.nan().transform((nan) => "Valor inválido")),
   price: z
     .number()
     .nullable()
-    .transform((qnt) => (qnt ? qnt.toFixed(2) : "0"))
-    .or(z.nan().transform((nan) => "0")),
+    .transform((qnt) => (qnt ? qnt.toFixed(2) : ""))
+    .or(z.nan().transform((nan) => "")),
   category: z.enum([
     Category.Alimentos,
     Category.Carnes,
